@@ -72,14 +72,16 @@ public class MainActivity extends AppCompatActivity {
         // Declares if it's a tie game.
         if(winner == null && !hasMoveLeft()){
             tv.setText("Its a tie.");
+            updateButtonText(2); // Gives status 2 because it's a tie game.
         }
 
         // Declares if there is a winner.
         if(winner != null){
             tv.setText(winner + " wins!");
+            updateButtonText(1); // Gives status 1 because some player wins.
+            return;
         }
-
-        updateButtonText();
+ // update the button once it's done.
     }
 
     // Checks the line if it has either straight 'X' or 'O'.
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Send the buttons that won in winningButton[] array.
     private void setWinningButtons(Button... btn){
         for(int i = 0; i < btn.length; i++){
             winningButton[i] = btn[i];
@@ -135,25 +138,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Updates buttons text colors depends on game status
-    private void updateButtonText(){
-        // status, tie = 0, win = 1.
+    private void updateButtonText(int status){
+        // if Status value is 1 = some player win if 2 = tie game.
         // Sets the button text color, if the game is tied.
-        if(getWinner() == null && !hasMoveLeft()){
+        if(status == 2){
             for(Button button : Buttons){
                 button.setTextColor(Color.GREEN);
             }
+
+            return;
         }
 
         // Sets the button text color. 'X' = red 'O' = blue.
-        if (getWinner() != null) {
+        if (status == 1) {
             for(Button button : winningButton){
                 button.setTextColor(winningButton[0].getText().equals("X") ? Color.RED : Color.BLUE);
             }
         }
 
-    }
-
-    private void setButtonStyles(Button btn){
     }
 
     // Method that check if there is a move left on the board.
